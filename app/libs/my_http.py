@@ -1,3 +1,7 @@
+"""
+HTTP的一般类
+"""
+
 import requests
 
 

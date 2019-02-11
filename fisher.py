@@ -1,5 +1,5 @@
 """
-基本项目
+本文件作用，创建app示例，启动服务器
 """
 
 from app import create_app

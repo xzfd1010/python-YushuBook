@@ -1,3 +1,6 @@
+"""
+处理当前程序的所有请求
+"""
 from app.libs.my_http import HTTP
 from flask import current_app  # 当前的app核心对象
 

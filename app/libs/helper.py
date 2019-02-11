@@ -1,3 +1,7 @@
+"""
+工具类
+"""
+
 def is_isbn_or_key(word):
     """
     isbn格式：isbn13 13个0-9的数字；isbn10 10个0-9的数字含有一些'-'

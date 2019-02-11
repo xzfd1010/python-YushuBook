@@ -6,7 +6,7 @@ from . import web
 from app.forms.book import SearchForm
 
 
-# 注册到蓝图上
+# 将视图函数注册到蓝图上
 @web.route('/book/search')  # router <q>动态参数
 def search():  # controller 也叫视图函数，本质就是函数，用于控制mvc view视图
     """
