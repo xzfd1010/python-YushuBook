@@ -18,7 +18,7 @@ class HTTP:
         #     if return_json:
         #         return r.json()  # 返回json格式
         #     else:
-        #         return r.text  # 返回字符串
+        #         return r.test3.py  # 返回字符串
         # else:
         #     if return_json:
         #         return {}

@@ -20,7 +20,7 @@ def search():  # controller 也叫视图函数，本质就是函数，用于控�
         q = form.q.data.strip()
         page = form.page.data
         isbn_or_key = is_isbn_or_key(q)
-        # 不可变转可变 a = request.args.to_dict()  args是一个immutable dict
+        # 不可变转可变 test3.py = request.args.to_dict()  args是一个immutable dict
         if isbn_or_key == 'isbn':
             result = YushuBook.search_by_isbn(q)
         else:

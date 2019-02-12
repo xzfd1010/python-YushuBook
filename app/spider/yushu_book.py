@@ -6,10 +6,11 @@ from flask import current_app  # 当前的app核心对象
 
 
 class YushuBook:
-    '''
-    完成所有的请求
-    类有职责自身完成请求，所以url应该定义为类变量
-    '''
+    # 完成所有的请求
+    # 类有职责自身完成请求，所以url应该定义为类变量
+
+    # 模型层 MVC M层
+
     # {} 代表动态参数
     isbn_url = 'http://t.yushu.im/v2/book/isbn/{}'
     keyword_url = 'http://t.yushu.im/v2/book/search?q={}&count={}&start={}'
