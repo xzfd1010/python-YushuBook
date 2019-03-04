@@ -6,3 +6,4 @@
 DEBUG = True
 SQLALCHEMY_DATABASE_URI = 'mysql+cymysql://root:zc000123@localhost:3306/fisher'  # 变量名不能修改，连接数据库
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+SECRET_KEY = 'aaabbb'

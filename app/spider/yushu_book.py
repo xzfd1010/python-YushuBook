@@ -29,6 +29,11 @@ class YushuBook:
         result = HTTP.get(url)
         self.__fill_single(result)
 
+    def search_by_keyword(self, keyword, page=1):
+        url = self.keyword_url.format(keyword, current_app.config['PER_PAGE'], self.calculate_start(page))
+        result = HTTP.get(url)
+        self.__fill_collection(result)
+
     def __fill_single(self, data):
         # 处理单本数据
         if data:
@@ -39,11 +44,6 @@ class YushuBook:
         # 处理集合数据
         self.total = data['total']
         self.books = data['books']
-
-    def search_by_keyword(self, keyword, page=1):
-        url = self.keyword_url.format(keyword, current_app.config['PER_PAGE'], self.calculate_start(page))
-        result = HTTP.get(url)
-        self.__fill_collection(result)
 
     def calculate_start(self, page):
         return (page - 1) * current_app.config['PER_PAGE']
