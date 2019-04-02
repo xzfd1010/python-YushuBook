@@ -45,7 +45,11 @@ def search():  # controller 也叫视图函数，本质就是函数，用于控�
 # 书籍详情页
 @web.route('/book/<isbn>/detail')
 def book_detail(isbn):
-    pass
+    yushu_book = YushuBook()
+    yushu_book.search_by_isbn(isbn)
+    book = BookViewModel(yushu_book.first)
+    # wishes gifts
+    return render_template('book_detail.html', book=book, wishes=[], gifts=[])
 
 
 @web.route('/test1')

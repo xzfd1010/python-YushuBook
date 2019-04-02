@@ -2,7 +2,7 @@
 完成应用级别的初始化操作，包括创建app，注册蓝图
 """
 from flask import Flask
-from app.models.book import db
+from app.models.base import db
 
 
 def create_app():

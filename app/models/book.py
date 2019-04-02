@@ -7,12 +7,11 @@
 # werkzeug
 
 from sqlalchemy import Column, Integer, String  # 基本类型从sqlalchemy导入
-from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
+from app.models.base import Base
 
 
-class Book(db.Model):
+class Book(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)  # 主键、自增
     title = Column(String(50), nullable=False)  # 长度50，不为空
     author = Column(String(30), default='佚名')

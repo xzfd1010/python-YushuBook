@@ -10,11 +10,12 @@ class BookViewModel:
         # 先处理单本数据，再处理集合数据
         self.title = book['title']
         self.publisher = book['publisher']
-        self.pages = book['pages'] or ''         # None转为空字符串
+        self.pages = book['pages'] or ''  # None转为空字符串
         self.author = '、'.join(book['author'])  # 单页面应用建议用js操作；如果是网站，建议在viewModel中处理
         self.price = book['price']
         self.summary = book['summary'] or ''
         self.image = book['images']
+        self.isbn = book['isbn']
 
     @property  # 用属性访问的方式访问函数
     def intro(self):
