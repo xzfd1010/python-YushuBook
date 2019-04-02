@@ -48,9 +48,6 @@ def book_detail(isbn):
     pass
 
 
-
-
-
 @web.route('/test1')
 def test1():
     from flask import request

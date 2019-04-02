@@ -20,7 +20,7 @@
         <div class="row col-padding">
             <a href="{{ url_for('web.book_detail', isbn=book.isbn) }}" class="">
                 <div class="col-md-2">
-                    <img class="book-img-small shadow" src="{{ book.image }}">
+                    <img class="book-img-small shadow" src="{{ book.image.large }}">
                 </div>
                 <div class="col-md-7 flex-vertical description-font">
                     <span class="title">{{ book.title }}</span>
