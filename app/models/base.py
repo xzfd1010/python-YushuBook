@@ -8,5 +8,10 @@ db = SQLAlchemy()
 
 class Base(db.Model):
     __abstract__ = True
-    create_time = Column('create_time', Integer)
+    # create_time = Column('create_time', Integer)
     status = Column(SmallInteger, default=1)
+
+    def set_attrs(self, attrs_dict):
+        for key, value in attrs_dict.items():
+            if hasattr(self, key) and key != 'id':  # 用于判断一个对象是否有某个属性
+                setattr(self, key, value)

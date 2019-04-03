@@ -6,7 +6,7 @@
 
 
 class BookViewModel:
-    def __init__(self, book):
+    def V__init__(self, book):
         # 先处理单本数据，再处理集合数据
         self.title = book['title']
         self.publisher = book['publisher']

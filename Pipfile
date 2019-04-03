@@ -12,6 +12,7 @@ wtforms = "*"
 flask-sqlalchemy = "*"
 cymysql = "*"
 crypto = "*"
+flask-login = "*"
 
 [requires]
 python_version = "3.7"
