@@ -12,16 +12,16 @@ __author__ = '七月'
 def register():
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
-        user = User()
-        # 不一个一个赋值，如何简化？ 利用python动态语言的特性
-        user.set_attrs(form.data)
-        # 将模型存入到数据库中，session是什么
-        db.session.add(user)
-        db.session.commit()
-        # 错误在form的error下
+        with db.auto_commit():
+            user = User()
+            # 不一个一个赋值，如何简化？ 利用python动态语言的特性
+            user.set_attrs(form.data)
+            # 将模型存入到数据库中，session是什么
+            db.session.add(user)
+            # 错误在form的error下
 
-        # 跳转到其他视图函数，这是一次重定向
-        return redirect(url_for('web.login'))
+            # 跳转到其他视图函数，这是一次重定向
+            return redirect(url_for('web.login'))
 
     # 如果想要提交后保存用户的提交信息，要把form重新传进去
     return render_template('auth/register.html', form=form)

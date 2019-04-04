@@ -1,8 +1,12 @@
 from flask import jsonify, request, render_template, flash
+from flask_login import current_user
 
 from app.libs.helper import is_isbn_or_key
+from app.models.gift import Gift
+from app.models.wish import Wish
 from app.spider.yushu_book import YushuBook
 from app.view_models.book import BookViewModel, BookCollection
+from app.view_models.trade import TradeInfo
 from . import web  # 这里引入的web是在__init__文件中初始化的实例，如果有多个也可以继续引入
 from app.forms.book import SearchForm
 import json
@@ -45,11 +49,30 @@ def search():  # controller 也叫视图函数，本质就是函数，用于控�
 # 书籍详情页
 @web.route('/book/<isbn>/detail')
 def book_detail(isbn):
+    has_in_gifts = False  # 默认情况下，书籍是否在礼物清单
+    has_in_wishes = False  # 是否在心愿清单
+
+    # 取书籍详情数据
     yushu_book = YushuBook()
     yushu_book.search_by_isbn(isbn)
     book = BookViewModel(yushu_book.first)
+
+    if current_user.is_authenticated:
+        if Gift.query.filter_by(uid=current_user.id, isbn=isbn, launched=False).first():
+            has_in_gifts = True
+        if Wish.query.filter_by(uid=current_user.id, isbn=isbn, launched=False).first():
+            has_in_wishes = True
+
+        pass
+    trade_gifts = Gift.query.filter_by(isbn=isbn, launched=False).all()
+    trade_wishes = Wish.query.filter_by(isbn=isbn, launched=False).all()
+    # 页面还需要user、create_time
+    # 数据转换 => viewModel
     # wishes gifts
-    return render_template('book_detail.html', book=book, wishes=[], gifts=[])
+    trade_gifts_model = TradeInfo(trade_gifts)
+    trade_wishes_model = TradeInfo(trade_wishes)
+    return render_template('book_detail.html', book=book, wishes=trade_wishes_model, gifts=trade_gifts_model,
+                           has_in_gift=has_in_gifts, has_in_wishes=has_in_wishes)
 
 
 @web.route('/test1')

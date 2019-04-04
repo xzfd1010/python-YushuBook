@@ -6,7 +6,7 @@
 
 
 class BookViewModel:
-    def V__init__(self, book):
+    def __init__(self, book):
         # 先处理单本数据，再处理集合数据
         self.title = book['title']
         self.publisher = book['publisher']
@@ -16,6 +16,8 @@ class BookViewModel:
         self.summary = book['summary'] or ''
         self.image = book['images']
         self.isbn = book['isbn']
+        self.pubdate = book['pubdate']  # 出版日期
+        self.binding = book['binding']  # 装帧
 
     @property  # 用属性访问的方式访问函数
     def intro(self):
