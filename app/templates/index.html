@@ -13,7 +13,7 @@
             <div class="col-md-4 book-container">
                 <a href="{{ url_for('web.book_detail', isbn=book.isbn) }}" class="">
                     <div class="col-md-4 no-padding">
-                        <img class="book-img cssshadow" src="{{ book.image }}">
+                        <img class="book-img cssshadow" src="{{ book.image.large }}">
                     </div>
                     <div style="margin-left: 0;" class="col-md-8 flex-vertical book-info">
                         <span class="title">{{ book.title }}</span>
