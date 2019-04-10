@@ -1,9 +1,13 @@
+from collections import namedtuple
+
 from flask import current_app
 from sqlalchemy.orm import relationship
-from app.models.base import Base
-from sqlalchemy import Column, Integer, Boolean, ForeignKey, String, desc
+from app.models.base import Base, db
+from sqlalchemy import Column, Integer, Boolean, ForeignKey, String, desc, func
 
 from app.spider.yushu_book import YushuBook
+
+EachGiftWishCount = namedtuple('EachGiftWishCount', ['count', 'isbn'])
 
 
 class Gift(Base):
@@ -16,6 +20,30 @@ class Gift(Base):
     # 用isbn编号将book和user关联
     isbn = Column(String(15), nullable=False)
     launched = Column(Boolean, default=False)  # 代表礼物是否赠送成功
+
+    @classmethod
+    def get_user_gifts(cls, uid):
+        gifts = Gift.query.filter_by(uid=uid, launched=False).order_by(
+            desc(Gift.create_time)).all()
+        return gifts
+
+    @classmethod
+    def get_wish_counts(cls, isbn_list):
+        from app.models.wish import Wish
+        # 根据传入的一组isbn，到Wish表中计算出某个礼物的Wish心愿数
+        # 需要拿到一组数量，所以拿到总数量之后，需要分组求数量，group_by，
+        # 不是查询模型，而是数量
+        # 保存用到了db.session，也可以用于查询
+        # filter的查询，是根据条件查询，传入条件表达式
+        # func.count + group_by = 分组统计
+        count_list = db.session.query(func.count(Wish.id), Wish.isbn).filter(
+            Wish.launched == False,
+            Wish.isbn.in_(isbn_list),
+            Wish.status == 1).group_by(
+            Wish.isbn).all()
+        # 返回对象
+        count_list = [{'count': w[0], 'isbn': w[1]} for w in count_list]
+        return count_list
 
     @classmethod
     def recent(cls):
@@ -36,3 +64,4 @@ class Gift(Base):
         yushu_book = YushuBook()
         yushu_book.search_by_isbn(self.isbn)
         return yushu_book.first
+

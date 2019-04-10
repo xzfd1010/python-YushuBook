@@ -3,7 +3,7 @@ from app.models.base import db
 from app.models.user import User
 from . import web
 from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_user
+from flask_login import login_user, logout_user
 
 __author__ = '七月'
 
@@ -63,7 +63,8 @@ def change_password():
 
 @web.route('/logout')
 def logout():
-    pass
+    logout_user()
+    return redirect(url_for('web.index'))
 
 
 @web.route('/register/confirm/<token>')

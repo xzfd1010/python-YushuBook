@@ -1,7 +1,9 @@
-from flask import current_app, flash, redirect, url_for
+from flask import current_app, flash, redirect, url_for, render_template
 
 from app.models.base import db
 from app.models.gift import Gift
+from app.view_models.gift import MyGifts
+from app.view_models.trade import MyTrades
 from . import web
 from flask_login import login_required, current_user
 
@@ -11,7 +13,13 @@ __author__ = '七月'
 @web.route('/my/gifts')
 @login_required
 def my_gifts():
-    return 'My Gifts'
+    uid = current_user.id
+    gifts_of_mine = Gift.get_user_gifts(uid)  # 用户的礼物清单
+    # 需要查询想要书籍的人数
+    isbn_list = [gift.isbn for gift in gifts_of_mine]
+    wish_count_list = Gift.get_wish_counts(isbn_list)
+    view_model = MyTrades(gifts_of_mine, wish_count_list)
+    return render_template('my_gifts.html', gifts=view_model.trades)
 
 
 @web.route('/gifts/book/<isbn>')
