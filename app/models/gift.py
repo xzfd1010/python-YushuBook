@@ -21,6 +21,9 @@ class Gift(Base):
     isbn = Column(String(15), nullable=False)
     launched = Column(Boolean, default=False)  # 代表礼物是否赠送成功
 
+    def is_yourself_gift(self, uid):
+        return self.uid == uid
+
     @classmethod
     def get_user_gifts(cls, uid):
         gifts = Gift.query.filter_by(uid=uid, launched=False).order_by(
@@ -65,3 +68,5 @@ class Gift(Base):
         yushu_book.search_by_isbn(self.isbn)
         return yushu_book.first
 
+    def delete(self):
+        self.status = 0

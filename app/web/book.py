@@ -62,8 +62,6 @@ def book_detail(isbn):
             has_in_gifts = True
         if Wish.query.filter_by(uid=current_user.id, isbn=isbn, launched=False).first():
             has_in_wishes = True
-
-        pass
     trade_gifts = Gift.query.filter_by(isbn=isbn, launched=False).all()
     trade_wishes = Wish.query.filter_by(isbn=isbn, launched=False).all()
     # 页面还需要user、create_time
@@ -72,7 +70,7 @@ def book_detail(isbn):
     trade_gifts_model = TradeInfo(trade_gifts)
     trade_wishes_model = TradeInfo(trade_wishes)
     return render_template('book_detail.html', book=book, wishes=trade_wishes_model, gifts=trade_gifts_model,
-                           has_in_gift=has_in_gifts, has_in_wishes=has_in_wishes)
+                           has_in_gifts=has_in_gifts, has_in_wishes=has_in_wishes)
 
 
 @web.route('/test1')

@@ -39,3 +39,6 @@ class Wish(Base):
         yushu_book = YushuBook()
         yushu_book.search_by_isbn(self.isbn)
         return yushu_book.first
+
+    def delete(self):
+        self.status = 0
